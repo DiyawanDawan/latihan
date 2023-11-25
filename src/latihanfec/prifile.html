@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+
+<div id="profile-container">
+    <!-- Data profil pengguna akan ditampilkan di sini -->
+</div>
+
+<script>
+    // Penulisan fungsi asinkron
+    async function fetchUserProfile() {
+        const userId = "123"; // Ganti dengan nilai yang sesuai
+
+        try {
+            const response = await fetch(`https://virtserver.swaggerhub.com/DIYAWANDAWAN_1/hemolife/1.0.0/v1/user/userProfile/${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    // Jika diperlukan, Anda dapat menambahkan header lain di sini
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (data.message === "User Ditemukan") {
+                const userProfile = data.user[0];
+
+                // Menambahkan data ke elemen HTML
+                const profileContainer = document.getElementById('profile-container');
+                profileContainer.innerHTML = `
+                    <h1>${userProfile.nama_lengkap}</h1>
+                    <p>Alamat: ${userProfile.alamat}</p>
+                    <p>Jenis Kelamin: ${userProfile.jenis_kelamin}</p>
+                    <p>Tanggal Lahir: ${userProfile.tanggal_lahir}</p>
+                    <p>Golongan Darah: ${userProfile.gol_darah}</p>
+                    <p>Total Donor: ${userProfile.total_donor}</p>
+                    <p>Donor Terakhir: ${userProfile.donor_terakhir}</p>
+                `;
+
+                // Menambahkan log data
+                console.log('Data Profil Pengguna:', userProfile);
+            } else if (data.message === "User Tidak Ditemukan") {
+                console.log('User tidak ditemukan.');
+            } else {
+                console.log('Respon tidak dikenali:', data);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // Anda dapat menangani kesalahan sesuai kebutuhan Anda
+        }
+    }
+
+    // Memanggil fungsi fetchUserProfile secara asinkron
+    fetchUserProfile();
+</script>
+
+</body>
+</html>

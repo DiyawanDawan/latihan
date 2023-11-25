@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accept and Reject Requests</title>
+</head>
+<body>
+    <button onclick="acceptRequest()">Accept Request</button>
+    <button onclick="rejectRequest()">Reject Request</button>
+
+    <!-- Container to display data -->
+    <div id="requestDataContainer"></div>
+
+    <script>
+        async function acceptRequest() {
+            const apiUrl = 'https://virtserver.swaggerhub.com/DIYAWANDAWAN_1/hemolife/1.0.0/v1/user/dashboardUser/acceptRequest';
+            
+            const requestBody = {
+                id_user_volunteer: 'string' // Replace 'string' with the actual value
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                console.log(data);
+                // Handle the response as needed
+
+                // After accepting the request, load and display data
+                loadAndDisplayData(data); // Pass the accepted data to the function
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        async function rejectRequest() {
+            const apiUrl = 'https://virtserver.swaggerhub.com/DIYAWANDAWAN_1/hemolife/1.0.0/v1/user/dashboardUser/rejectRequest';
+            
+            const requestBody = {
+                id_user_volunteer: 'string' // Replace 'string' with the actual value
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+                console.log(data);
+                // Handle the response as needed
+
+                // After rejecting the request, load and display data
+                loadAndDisplayData(data); // Pass the rejected data to the function
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function loadAndDisplayData(data) {
+            // Access the volunteer data from the response
+            const volunteer = data.volunteer[0];
+
+            // Display the data in the HTML
+            const requestDataContainer = document.getElementById('requestDataContainer');
+            requestDataContainer.innerHTML = `
+                <h3>Data:</h3>
+                <p>Requester: ${volunteer.alamat_volunteer}</p>
+                <p>Blood Type: ${volunteer.gol_darah}</p>
+                <p>Other Data: ${volunteer.no_hp}</p>
+                <!-- Add more fields as needed -->
+            `;
+        }
+
+        // TODO post rejr
+
+  // static async acceptRequest(idUserVolunteer) {
+  //   const requestBody = {
+  //     id_user_volunteer: idUserVolunteer,
+  //   };
+
+  //   const response = await fetch(API_ENDPOINT.ACCEPT_REQUEST, {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(requestBody),
+  //   });
+
+  //   const responseJson = await response.json();
+  //   return responseJson;
+  // }
+
+  // static async rejectRequest(idUserVolunteer) {
+  //   const requestBody = {
+  //     id_user_volunteer: idUserVolunteer,
+  //   };
+
+  //   const response = await fetch(API_ENDPOINT.REJECT_REQUEST, {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       // Tambahkan header tambahan jika diperlukan
+  //     },
+  //     body: JSON.stringify(requestBody),
+  //   });
+
+  //   const responseJson = await response.json();
+  //   return responseJson;
+  // }
+
+    </script>
+</body>
+</html>

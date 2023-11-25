@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch Data Example</title>
+</head>
+<body>
+
+<script>
+async function fetchData() {
+  const endpoint = 'https://virtserver.swaggerhub.com/DIYAWANDAWAN_1/hemolife/1.0.0/v1/user/jadwal';
+
+  try {
+    const response = await fetch(endpoint);
+
+    // Check if the response status is OK (200)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+  
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Process the data
+    console.log(data);
+
+  } catch (error) {
+    // Handle errors
+    console.error('Fetch error:', error);
+  }
+}
+
+// Call the function
+fetchData();
+
+</script>
+<!-- static async jadwalDonorDarah() {
+    try {
+        const response = await fetch(API_ENDPOINT.JADWAL);
+        const responseJson = await response.json();
+
+        // Log the response
+        console.log('API Response:', responseJson);
+
+        return responseJson.results;
+    } catch (error) {
+        console.error('Fetch error:', error);
+        throw error; // Rethrow the error for handling in the calling code
+    }
+} -->
+</body>
+</html>
